@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    Note: As an alternative to hand editing this file you can use the 
+    web admin tool to configure settings for your application. Use
+    the Website->Asp.Net Configuration option in Visual Studio.
+    A full list of settings and comments can be found in 
+    machine.config.comments usually located in 
+    \Windows\Microsoft.Net\Framework\v2.x\Config 
+-->
+<configuration>
+  <configSections>
+    <section name="AppZone.Authentication" type="AppZonePortal.Services.ActiveDirectory.Utility.ActiveDirectoryConfigurationSection, AppZonePortal.Services" />
+    <section name="PANE.ErrorLog" type="System.Configuration.NameValueSectionHandler, System,Version=1.0.5000.0,Culture=neutral,PublicKeyToken=b77a5c561934e089" />
+    <section name="Messaging.Notifier" type="System.Configuration.NameValueSectionHandler, System,Version=1.0.5000.0,Culture=neutral,PublicKeyToken=b77a5c561934e089" />
+    <section name="nhibernateSettings" type="PANE.Framework.Managed.NHibernateManager.Configuration.OpenSessionInViewSection,  PANE.Framework.Managed" />
+    <section name="hibernate-configuration" type="NHibernate.Cfg.ConfigurationSectionHandler, NHibernate" />
+    <section name="coolite" type="Coolite.Ext.Web.GlobalConfig" requirePermission="false" />
+  </configSections>
+  <!--<coolite renderScripts="CacheFly" renderStyles="CacheFly" />-->
+  <hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+    <session-factory>
+      <property name="dialect">NHibernate.Dialect.MsSql2005Dialect</property>
+      <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
+      <property name="connection.driver_class">NHibernate.Driver.SqlClientDriver</property>
+      <property name="connection.connection_string">Server=DESKTOP-7VKNDHB\SQLEXPRESS01;Initial Catalog=ZoneAdminPortal;User ID=Cassim;Password=opensesame;</property>
+      <property name="connection.isolation">ReadCommitted</property>
+      <property name="proxyfactory.factory_class">NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle</property>
+      <!--<property name="session_factory_name">ManagedServices_SessionFactory</property>-->
+      <property name="default_schema">dbo</property>
+      <property name="hbm2ddl.auto">update</property>
+      <!-- HBM Mapping Files -->
+      <mapping assembly="PANE.Framework.Managed" />
+      <mapping assembly="AppZonePortal.Core" />
+      <!--<mapping assembly ="SOA.Framework.FunctionItemsMapping"/>-->
+    </session-factory>
+  </hibernate-configuration>
+  <system.net>
+    <mailSettings>
+      <smtp from="oge.blessing@gmail.com" deliveryMethod="Network">
+        <network host="smtp.gmail.com" port="587" userName="oge.blessing@gmail.com" password="" />
+      </smtp>
+    </mailSettings>
+  </system.net>
+  <PANE.ErrorLog>
+    <add key="ToEmail" value="tayorinde@paneinternational.com" />
+    <add key="DirectoryLog" value="C:\Appzone\Log\FBNIssuancePortal\" />
+    <add key="Enabled" value="True" />
+    <add key="DebugMode" value="True" />
+    <add key="EnsureDataIsLogged" value="True" />
+  </PANE.ErrorLog>
+  <Messaging.Notifier>
+    <add key="DisableEmail" value="false" />
+    <add key="InstitutionName" value="First Bank" />
+    <add key="ApplicationName" value="CardIssuance Administration" />
+    <add key="AppZoneSupportEmail" value="oonyekpa@appzonegroup.com" />
+  </Messaging.Notifier>
+  <AppZone.Authentication UsesActiveDirectory="false">
+    <ActiveDirectorySettings>
+      <add Server="server" Container="DC=Nigeria,DC=Bank,DC=local" Username="User" Password="" />
+    </ActiveDirectorySettings>
+  </AppZone.Authentication>
+  <appSettings>
+    <!--Banks App Settings-->
+    <add key="BANK" value="Ubn" />
+    <add key="PortalTimeout" value="5" />
+    <add key="PasswordValidityDaysSpan" value="30" />
+    <add key="PasswordDaysToExpiryWarning" value="7" />
+    <add key="CLIENTIPADDRESS" value="REMOTE_ADDR" />
+    <add key="BankType" value="Bank" />
+    <add key="AppZonePortalTitle" value="Zone" />
+    <add key="PasswordPolicyRegex" value="^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,30}$" />
+    <add key="DefaultInstitutionCode" value="0005" />
+    <add key="ApplicationName" value="Services" />
+    <add key="BankONE_UserName" value="BankONE" />
+    <!-- Bank Authentication Details -->
+    <add key="BankDetailsEncrypted" value="false" />
+    <add key="BankService" value="http://172.27.12.123/authservice/AuthenticationService.asmx" />
+    <add key="BankAppID" value="TestID" />
+    <add key="Action" value="AuthenticateToken" />
+    <add key="AuthAction" value="GetUserAdFullDetails" />
+    <add key="FetchUserDetails" value="GetUserAdFullDetailsWLoginName" />
+    <add key="BankAPPKey" value="087f7101089b76ce079e3725276d91d1a30872ba" />
+    <!--URL Settings-->
+    <add key="ApplicationUrl" value="http://localhost" />
+    <add key="AffiliateLoginURL" value="~/AffiliateLogin.aspx" />
+    <add key="ManagedServicesURL" value="localhost/ZoneAdminPortal" />
+    <add key="ApplicationUrls_Global_ASAX" value="/ZoneAdminPortal/;/ZoneAdminPortal" />
+    <add key="ApplicationUrls_Global_ASAX_EXCLUDE" value="AffiliateReport1.aspx;" />
+    <!--Mapping Settings-->
+    <add key="AreNhibernateConfigFilesEncrypted" value="true" />
+    <add key="LocalMappingAssemblies" value="PANE.Framework.Managed,AppZonePortal.Core" />
+    <add key="CoreMappingAssemblies" value="PANE.Framework.Managed,AppZonePortal.Core" />
+    <add key="RemoteMappingAssemblies" value="PANE.Framework.Managed,AppZonePortal.Core" />
+    <add key="RemoteNhibernateFile" value="C:\inetpub\wwwroot\ZoneApps\ZoneAdminPortal\Web.config" />
+    <add key="CoreNhibernateFile" value="C:\inetpub\wwwroot\ZoneApps\ZoneAdminPortal\Web.config" />
+    <add key="LocalNhibernateFile" value="C:\inetpub\wwwroot\ZoneApps\ZoneAdminPortal\Web.config" />
+    <add key="MappingAssembly" value="" />
+    <add key="MapingFilePath" value="C:\inetpub\wwwroot\ZoneApps\ZoneAdminPortal\Utility" />
+    <add key="UserUploadMappingFile" value="UserUploadFileMap.xml" />
+    <add key="CPCHubUserUploadMappingFile" value="CPCHubUserUploadFileMap.xml" />
+    <!--Banks Active Directory Settings-->
+    <add key="UsesActiveDirectory" value="true" />
+    <add key="ADDetailsEncrypted" value="true" />
+    <add key="AuthenticateADUser" value="false" />
+    <add key="ADServer" value="23.96.116.229" />
+    <add key="ADContainer" value="CN=Users,DC=zoneswitch,DC=local" />
+    <add key="ADUsername" value="ad-admin" />
+    <add key="ADPassword" value="Bmlp88hfJnS2Tt4U9VEmOQ==" />
+    <!--Email Settings-->
+    <add key="ZoneSwitchEmailAddess" value="zone.appzonegroup@gmail.com" />
+    <add key="ZoneSwitchEmailPassword" value="ApP@ssw0rd" />
+    <add key="ZoneSwitchEmailAddess1" value="ciyang@lerries.com" />
+    <add key="ZoneSwitchEmailPassword1" value="appzonegroup" />
+    <!--Smtp Settings-->
+    <add key="SmtpServer" value="smtp.gmail.com" />
+    <add key="SmtpPort" value="587" />
+    <add key="MailFrom" value="oge.blessing@gmail.com" />
+    <add key="UsesAuthentication" value="false" />
+    <add key="SmtpDomain" value="smtp.gmail.com" />
+    <add key="SmtpUserName" value="oge.blessing@gmail.com" />
+    <add key="SmtpPassword" value="" />
+    <!--Available services Settings-->
+    <add key="ShowCPCFunctions" value="false" />
+    <add key="UsesToken" value="false" />
+    <add key="UsesPasswordAuthAPI" value="false" />
+    <add key="IsManagedServices" value="true" />
+    <add key="IgnoreInstitutionCode" value="false" />
+    <add key="DemoMode" value="true" />
+    <!--Union AD Credentials-->
+    <add key="UnionADModuleId" value="zoneswitch" />
+    <add key="UnionADSOAPUrl" value="http://10.8.0.10:7777/UBN/AuthenticationService/ProxyService/AuthenticationPS?wsdl" />
+    			<!-- UNION API AD CREDENTIALS STARTS  -->
+	  <add key="unionADBaseUrl" value="http://10.8.0.10:7777/UBN/AuthenticationService/ProxyService/AuthenticationPS?wsdl" />
+	  <add key="unionADMethodName" value="ws:AdAuthenticate" />
+	  <add key="unionADUser" value="zoneswitchpoc" />
+	  <add key="unionADPassword" value="Userpoc@123456%" />
+	  <add key="unionADModuleId" value="zoneswitch" />
+	 <add key="unionTokenBaseUrl" value="https://wlsposting-vip.unionbankng.com/authserv/" />
+	  <add key="unionEmailUrl" value="https://wlsposting-vip.unionbankng.com/emailservice-api/secured/sendemailsync" />
+	  <add key="unionClientSecret" value="GcYaNS1GfgEKNrTsg0CWowceY5ice9nUv" />
+	  <add key="unionClientID" value="ZONESWITCH" />
+	  <add key="unionGrantType" value="password" />
+	  <add key="unionUsername" value="zoneswitch" />
+  <add key="unionPassword" value="PjjVlw4eMKVaeBOOiBFobRZvs3Ej" />
+		<!-- UNION API AD CREDENTIALS ENDS -->
+	
+  </appSettings>
+  <connectionStrings>
+    <add name="LocalNhibernateFileConnectionString" connectionString="Server=DESKTOP-7VKNDHB\SQLEXPRESS01;Initial Catalog=ZoneAdminPortal;User ID=Cassim;Password=opensesame;" providerName="System.Data.SqlClient" />
+    <add name="RemoteNhibernateFileConnectionString" connectionString="Server=DESKTOP-7VKNDHB\SQLEXPRESS01;Initial Catalog=ZoneAdminPortal;User ID=Cassim;Password=opensesame;" providerName="System.Data.SqlClient" />
+    <add name="CoreNhibernateFileConnectionString" connectionString="Server=DESKTOP-7VKNDHB\SQLEXPRESS01;Initial Catalog=ZoneAdminPortal;User ID=Cassim;Password=opensesame;" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <!--
+    For a description of web.config changes see http://go.microsoft.com/fwlink/?LinkId=235367.
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.6.2" />
+      </system.Web>
+  -->
+  <system.web>
+    <httpCookies requireSSL="false" httpOnlyCookies="false" lockItem="true" />
+    <httpRuntime maxRequestLength="524288" />
+    <!-- 
+            Set compilation debug="true" to insert debugging
+            symbols into the compiled page. Because this 
+            affects performance, set this value to true only 
+            during development.
+        -->
+    <compilation debug="true" targetFramework="4.6.1">
+      <assemblies>
+        <add assembly="System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" />
+        <add assembly="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+        <add assembly="System.DirectoryServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" />
+        <add assembly="System.DirectoryServices.AccountManagement, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+        <add assembly="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+        <add assembly="PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+        <add assembly="System.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" />
+        <add assembly="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" />
+      </assemblies>
+    </compilation>
+    <!--
+            The <authentication> section enables configuration 
+            of the security authentication mode used by 
+            ASP.NET to identify an incoming user. 
+        -->
+    <authentication mode="Forms">
+      <forms name=".ASPXZONEPORTAL" protection="All" loginUrl="~/LoginPage.aspx" defaultUrl="~/Default.aspx" />
+      <!--timeout="1" slidingExpiration="true"-->
+      <!--requireSSL="true"-->
+    </authentication>
+    <!--
+            The <customErrors> section enables configuration 
+            of what to do if/when an unhandled error occurs 
+            during the execution of a request. Specifically, 
+            it enables developers to configure html error pages 
+            to be displayed in place of a error stack trace.
+-->
+    <customErrors mode="Off" defaultRedirect="~/GenericErrors.aspx">
+      <!--<error statusCode="401" redirect="~/GenericError.aspx"/>
+      <error statusCode="403" redirect="~/GenericError.aspx"/>
+    <error statusCode="404" redirect="~/GenericError.aspx"/>
+    <error statusCode="405" redirect="~/GenericError.aspx"/>
+    <error statusCode="406" redirect="~/GenericError.aspx"/>
+    <error statusCode="412" redirect="~/GenericError.aspx"/>
+    <error statusCode="500" redirect="~/GenericError.aspx"/>
+    <error statusCode="501" redirect="~/GenericError.aspx"/>
+    <error statusCode="502" redirect="~/GenericError.aspx"/>-->
+    </customErrors>
+    <roleManager enabled="true" defaultProvider="FunctionRoleProvider">
+      <providers>
+        <add applicationName="Administration" assemblyName="AppZonePortal.Core" name="FunctionRoleProvider" type="PANE.Framework.Managed.Functions.FunctionsRoleProvider, PANE.Framework.Managed" />
+        <add applicationName="ZoneSwitch" assemblyName="ZoneSwitch.Logic" name="ZoneSwitchRoleProvider" type="SOA.Framework.FunctionHelper.ManagedFunctionRoleProvider, SOA.Framework" endpoint="ZoneSwitch_RoleProvider" />
+        <add applicationName="ZoneScheme" assemblyName="ZoneScheme.Logic" name="ZoneSchemeRoleProvider" type="SOA.Framework.FunctionHelper.ManagedFunctionRoleProvider, SOA.Framework" endpoint="ZoneScheme_RoleProvider" />
+        <!--<add applicationName="POS Onboarding" assemblyName="PosPortal.Services" name="POSRoleProvider" type="SOA.Framework.FunctionHelper.ManagedFunctionRoleProvider, SOA.Framework" endpoint="PosPortal_RoleProvider"/>-->
+      </providers>
+    </roleManager>
+    <membership defaultProvider="FunctionsMembershipProvider">
+      <providers>
+        <add applicationName="BankOne" requiresUniqueEmail="true" enablePasswordRetrieval="true" enablePasswordReset="true" requiresQuestionAndAnswer="true" maxLoginAttempts="3" minPasswordLength="1" name="FunctionsMembershipProvider" type="PANE.Framework.Managed.Functions.FunctionsMembershipProvider, PANE.Framework.Managed" />
+      </providers>
+    </membership>
+    <siteMap defaultProvider="Administration" enabled="true">
+      <providers>
+        <remove name="MySqlSiteMapProvider" />
+        <add name="Administration" description="SiteMap Provider for Functions Framework" type="System.Web.XmlSiteMapProvider" securityTrimmingEnabled="true" siteMapFile="web.sitemap" />
+        <add name="ZoneSwitch" applicationID="1" description="SiteMap Provider for Functions Framework" type="SOA.Framework.SiteMapHelper.ManagedSiteMapProvider" endpoint="ZoneSwitch_Sitemap" iconName="EmailGo" />
+        <add name="ZoneScheme" applicationID="2" description="SiteMap Provider for Functions Framework" type="SOA.Framework.SiteMapHelper.ManagedSiteMapProvider" endpoint="ZoneScheme_Sitemap" iconName="Transmit" />
+        <!--<add name="POS Onboarding" applicationID="2" description="SiteMap Provider for Functions Framework" type="SOA.Framework.SiteMapHelper.ManagedSiteMapProvider" endpoint="PosPortal_Sitemap" iconName="Transmit" />-->
+      </providers>
+    </siteMap>
+    <pages theme="Default" buffer="true" validateRequest="true" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID">
+      <controls>
+        <add assembly="PANE.Framework.Managed" namespace="PANE.Framework.Managed.Utility" tagPrefix="pane" />
+      </controls>
+    </pages>
+    <httpHandlers>
+      <add path="*/coolite.axd" verb="*" type="Coolite.Ext.Web.ResourceManager" validate="false" />
+    </httpHandlers>
+    <httpModules>
+      <add name="NhibModule" type="PANE.Framework.Managed.NHibernateManager.NHibernateSessionHttpModule, PANE.Framework.Managed" />
+      <add name="AjaxRequestModule" type="Coolite.Ext.Web.AjaxRequestModule, Coolite.Ext.Web" />
+    </httpModules>
+    <machineKey validationKey="F9D1A2D3E1D3E2F7B3D9F90FF3965ABDAC304902" decryptionKey="F9D1A2D3E1D3E2F7B3D9F90FF3965ABDAC304902F8D923AC" validation="SHA1" />
+  </system.web>
+  <location path="Default.aspx">
+    <system.web>
+      <authorization>
+        <deny users="?" />
+      </authorization>
+    </system.web>
+  </location>
+  <!--<location path="GenericError.aspx">
+    <system.web>
+      <authorization>
+        <deny users="?" />
+      </authorization>
+    </system.web>
+  </location>-->
+  <!-- 
+        The system.webServer section is required for running ASP.NET AJAX under Internet
+        Information Services 7.0.  It is not necessary for previous version of IIS.
+    -->
+  <system.webServer>
+    <modules>
+      <remove name="NhibModule" />
+      <add name="NhibModule" type="PANE.Framework.Managed.NHibernateManager.NHibernateSessionHttpModule, PANE.Framework.Managed" />
+    </modules>
+    <handlers>
+      <!--<add name="svc-Integrated" path="*.svc" verb="*" type="System.ServiceModel.Activation.HttpHandler, System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" preCondition="integratedMode" />
+      <add name="svc-ISAPI-2.0" path="*.svc" verb="*" modules="IsapiModule" scriptProcessor="%SystemRoot%\Microsoft.NET\Framework\v2.0.50727\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv2.0,bitness32" />-->
+    </handlers>
+    <httpRedirect enabled="true" />
+    <httpErrors>
+      <remove statusCode="502" subStatusCode="-1" />
+      <remove statusCode="501" subStatusCode="-1" />
+      <remove statusCode="500" subStatusCode="-1" />
+      <remove statusCode="412" subStatusCode="-1" />
+      <remove statusCode="406" subStatusCode="-1" />
+      <remove statusCode="405" subStatusCode="-1" />
+      <remove statusCode="404" subStatusCode="-1" />
+      <remove statusCode="403" subStatusCode="-1" />
+      <remove statusCode="401" subStatusCode="-1" />
+      <error statusCode="401" prefixLanguageFilePath="" path="~/GenericError.aspx" responseMode="ExecuteURL" />
+      <error statusCode="403" prefixLanguageFilePath="" path="~/GenericError.aspx" responseMode="ExecuteURL" />
+      <error statusCode="404" prefixLanguageFilePath="" path="~/GenericError.aspx" responseMode="ExecuteURL" />
+      <error statusCode="405" prefixLanguageFilePath="" path="~/GenericError.aspx" responseMode="ExecuteURL" />
+      <error statusCode="406" prefixLanguageFilePath="" path="~/GenericError.aspx" responseMode="ExecuteURL" />
+      <error statusCode="412" prefixLanguageFilePath="" path="~/GenericError.aspx" responseMode="ExecuteURL" />
+      <error statusCode="500" prefixLanguageFilePath="" path="~/GenericError.aspx" responseMode="ExecuteURL" />
+      <error statusCode="501" prefixLanguageFilePath="" path="~/GenericError.aspx" responseMode="ExecuteURL" />
+      <error statusCode="502" prefixLanguageFilePath="" path="~/GenericError.aspx" responseMode="ExecuteURL" />
+    </httpErrors>
+    <validation validateIntegratedModeConfiguration="false" />
+  </system.webServer>
+  <system.serviceModel>
+    <services>
+      <service behaviorConfiguration="GeneralBehaviors" name="System.Web.ApplicationServices.AuthenticationService">
+        <endpoint binding="basicHttpBinding" bindingConfiguration="userHttps" bindingNamespace="http://asp.net/ApplicationServices/v200" contract="System.Web.ApplicationServices.AuthenticationService" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="System.Web.ApplicationServices.RoleService">
+        <endpoint binding="basicHttpBinding" bindingConfiguration="userHttps" bindingNamespace="http://asp.net/ApplicationServices/v200" contract="System.Web.ApplicationServices.RoleService" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="SOA.Framework.MembershipHelper.MembershipService">
+        <endpoint address="" binding="customBinding" bindingConfiguration="customBinding0" contract="SOA.Framework.MembershipHelper.MembershipService" />
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="SOA.Framework.SessionHelper.SessionService">
+        <endpoint address="" binding="customBinding" bindingConfiguration="customBinding0" contract="SOA.Framework.SessionHelper.SessionService" />
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="BranchService">
+        <endpoint address="" binding="wsHttpBinding" contract="IBranchService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="RegionService">
+        <endpoint address="" binding="wsHttpBinding" contract="IRegionService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="UserService">
+        <endpoint address="" binding="wsHttpBinding" contract="IUserService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="UserRoleService">
+        <endpoint address="" binding="wsHttpBinding" contract="IUserRoleServices">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="ApprovalConfigService">
+        <endpoint address="" binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IMfbService" contract="IApprovalConfigService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="RecentActivityService">
+        <endpoint address="" binding="wsHttpBinding" contract="IRecentActivityService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="MfbService">
+        <endpoint address="" binding="wsHttpBinding" contract="IMfbService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="ImpersonationServiceBehavior" name="ImpersonationService">
+        <endpoint address="" binding="wsHttpBinding" contract="IImpersonationService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="UtilityService">
+        <endpoint address="" binding="wsHttpBinding" contract="IUtilityService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="CPCHubService">
+        <endpoint address="" binding="wsHttpBinding" contract="ICPCHubService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="GeneralBehaviors" name="CPCHubUserService">
+        <endpoint address="" binding="wsHttpBinding" contract="ICPCHubUserService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+      <service behaviorConfiguration="ServiceBehavior" name="Service">
+        <endpoint address="" binding="wsHttpBinding" contract="IService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+    </services>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="userHttps">
+          <security mode="None" />
+        </binding>
+        <binding name="BasicHttpBinding_IAuthWrapper" />
+      </basicHttpBinding>
+      <customBinding>
+        <binding name="CustomBinding_General2">
+          <binaryMessageEncoding maxReadPoolSize="64" maxWritePoolSize="16" maxSessionSize="2048">
+            <readerQuotas maxDepth="32" maxStringContentLength="2147483647" maxArrayLength="2147483647" maxBytesPerRead="2147483647" maxNameTableCharCount="2147483647" />
+          </binaryMessageEncoding>
+          <httpTransport manualAddressing="false" maxBufferPoolSize="2147483647" maxReceivedMessageSize="2147483647" allowCookies="false" authenticationScheme="Anonymous" bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard" keepAliveEnabled="true" maxBufferSize="2147483647" proxyAuthenticationScheme="Anonymous" realm="" transferMode="Buffered" unsafeConnectionNtlmAuthentication="false" useDefaultWebProxy="true" />
+        </binding>
+        <binding name="customBinding0">
+          <binaryMessageEncoding />
+          <httpTransport />
+        </binding>
+      </customBinding>
+      <wsHttpBinding>
+        <binding name="WSHttpBinding_IMfbService" closeTimeout="00:01:00" openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00" bypassProxyOnLocal="false" transactionFlow="false" hostNameComparisonMode="StrongWildcard" maxBufferPoolSize="2147483647" maxReceivedMessageSize="2147483647" messageEncoding="Text" textEncoding="utf-8" useDefaultWebProxy="true" allowCookies="false">
+          <readerQuotas maxDepth="32" maxStringContentLength="2147483647" maxArrayLength="2147483647" maxBytesPerRead="2147483647" maxNameTableCharCount="2147483647" />
+          <reliableSession ordered="true" inactivityTimeout="00:10:00" enabled="false" />
+          <security mode="Message">
+            <transport clientCredentialType="Windows" proxyCredentialType="None" realm="" />
+            <message clientCredentialType="Windows" negotiateServiceCredential="true" algorithmSuite="Default" establishSecurityContext="true" />
+          </security>
+        </binding>
+        <binding name="WSHttpBinding_IService" closeTimeout="00:01:00" openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00" bypassProxyOnLocal="false" transactionFlow="false" hostNameComparisonMode="StrongWildcard" maxBufferPoolSize="2147483647" maxReceivedMessageSize="2147483647" messageEncoding="Text" textEncoding="utf-8" useDefaultWebProxy="true" allowCookies="false">
+          <readerQuotas maxDepth="2147483647" maxStringContentLength="2147483647" maxArrayLength="2147483647" maxBytesPerRead="2147483647" maxNameTableCharCount="2147483647" />
+          <reliableSession ordered="true" inactivityTimeout="00:10:00" enabled="false" />
+          <security mode="Message">
+            <transport clientCredentialType="Windows" proxyCredentialType="None" realm="" />
+            <message clientCredentialType="Windows" negotiateServiceCredential="true" algorithmSuite="Default" establishSecurityContext="true" />
+          </security>
+        </binding>
+        <binding name="WSHttpBinding_IBillingTransService" closeTimeout="00:01:00" openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00" bypassProxyOnLocal="false" transactionFlow="false" hostNameComparisonMode="StrongWildcard" maxBufferPoolSize="524288" maxReceivedMessageSize="65536" messageEncoding="Text" textEncoding="utf-8" useDefaultWebProxy="true" allowCookies="false">
+          <readerQuotas maxDepth="32" maxStringContentLength="8192" maxArrayLength="16384" maxBytesPerRead="4096" maxNameTableCharCount="16384" />
+          <reliableSession ordered="true" inactivityTimeout="00:10:00" enabled="false" />
+          <security mode="Message">
+            <transport clientCredentialType="Windows" proxyCredentialType="None" realm="" />
+            <message clientCredentialType="Windows" negotiateServiceCredential="true" algorithmSuite="Default" />
+          </security>
+        </binding>
+        <binding name="WSHttpBinding_IMessageSendingService" closeTimeout="00:01:00" openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00" bypassProxyOnLocal="false" transactionFlow="false" hostNameComparisonMode="StrongWildcard" maxBufferPoolSize="524288" maxReceivedMessageSize="65536" messageEncoding="Text" textEncoding="utf-8" useDefaultWebProxy="true" allowCookies="false">
+          <readerQuotas maxDepth="32" maxStringContentLength="8192" maxArrayLength="16384" maxBytesPerRead="4096" maxNameTableCharCount="16384" />
+          <reliableSession ordered="true" inactivityTimeout="00:10:00" enabled="false" />
+          <security mode="Message">
+            <transport clientCredentialType="Windows" proxyCredentialType="None" realm="" />
+            <message clientCredentialType="Windows" negotiateServiceCredential="true" algorithmSuite="Default" />
+          </security>
+        </binding>
+        <binding name="WSHttpBinding_IMiscService" closeTimeout="00:01:00" openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00" bypassProxyOnLocal="false" transactionFlow="false" hostNameComparisonMode="StrongWildcard" maxBufferPoolSize="524288" maxReceivedMessageSize="65536" messageEncoding="Text" textEncoding="utf-8" useDefaultWebProxy="true" allowCookies="false">
+          <readerQuotas maxDepth="32" maxStringContentLength="8192" maxArrayLength="16384" maxBytesPerRead="4096" maxNameTableCharCount="16384" />
+          <reliableSession ordered="true" inactivityTimeout="00:10:00" enabled="false" />
+          <security mode="Message">
+            <transport clientCredentialType="Windows" proxyCredentialType="None" realm="" />
+            <message clientCredentialType="Windows" negotiateServiceCredential="true" algorithmSuite="Default" />
+          </security>
+        </binding>
+      </wsHttpBinding>
+    </bindings>
+    <behaviors>
+      <serviceBehaviors>
+        <behavior name="GeneralBehaviors">
+          <serviceMetadata httpGetEnabled="true" />
+          <serviceDebug includeExceptionDetailInFaults="true" />
+        </behavior>
+        <behavior name="ImpersonationServiceBehavior">
+          <serviceMetadata httpGetEnabled="true" />
+          <serviceDebug includeExceptionDetailInFaults="true" />
+        </behavior>
+        <behavior name="ServiceBehavior">
+          <serviceMetadata httpGetEnabled="true" />
+          <serviceDebug includeExceptionDetailInFaults="false" />
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+    <client>
+      <endpoint address="http://localhost/ZoneAdminPortal/Services/MfbService.svc" binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IMfbService" contract="MfbServiceRef.IMfbService" name="WSHttpBinding_IMfbService" />
+      <endpoint address="http://localhost/ZoneAdminPortal/Services/SessionService.svc" binding="customBinding" bindingConfiguration="CustomBinding_General2" contract="SS.SessionService" name="CustomBinding_SiteMapService" />
+      <endpoint address="http://localhost/ZoneAdminPortal/Services/ApprovalService.svc" binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IService" contract="APPS.ApprovalService" name="CustomBinding_ApprovalService" />
+      <endpoint address="http://localhost/ZoneAdminPortal/Services/UtilityService.svc" binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IService" contract="US.IUtilityService" name="WSHttpBinding_IUtilityService" />
+      <!--Bank Admin-->
+      <endpoint address="http://localhost/BankAdmin/services/SiteMapService.svc" binding="customBinding" bindingConfiguration="CustomBinding_General2" contract="SMS.SiteMapService" name="ZoneSwitch_Sitemap" />
+      <endpoint address="http://localhost/BankAdmin/services/FunctionsService.svc" binding="customBinding" bindingConfiguration="CustomBinding_General2" contract="FS.FunctionService" name="ZoneSwitch_RoleProvider" />
+      <endpoint address="http://localhost/BankAdmin/services/ApprovalService.svc" binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IService" contract="APPS.ApprovalService" name="ZoneSwitch_Approval" />
+      <endpoint address="http://localhost/ZoneScheme/services/SiteMapService.svc" binding="customBinding" bindingConfiguration="CustomBinding_General2" contract="SMS.SiteMapService" name="ZoneScheme_Sitemap" />
+      <endpoint address="http://localhost/ZoneScheme/services/FunctionsService.svc" binding="customBinding" bindingConfiguration="CustomBinding_General2" contract="FS.FunctionService" name="ZoneScheme_RoleProvider" />
+      <endpoint address="http://localhost/ZoneScheme/services/ApprovalService.svc" binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IService" contract="APPS.ApprovalService" name="ZoneScheme_Approval" />
+    </client>
+    <serviceHostingEnvironment aspNetCompatibilityEnabled="true" />
+  </system.serviceModel>
+  <system.diagnostics>
+    <sources>
+      <source name="System.ServiceModel" switchValue="Error, ActivityTracing" propagateActivity="true">
+        <listeners>
+          <add name="traceListener" type="System.Diagnostics.XmlWriterTraceListener" initializeData="C:\Logs\ZoneAdminPortal\TracesForPortal.txt" />
+        </listeners>
+      </source>
+    </sources>
+  </system.diagnostics>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="NHibernate" publicKeyToken="aa95f207798dfdb4" culture="neutral" />
+        <bindingRedirect oldVersion="2.1.2.4000-7.0.0.4000" newVersion="2.1.2.4000" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="EPPlus" publicKeyToken="ea159fdaa78159a1" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-2.8.0.2" newVersion="2.8.0.2" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+</configuration>
