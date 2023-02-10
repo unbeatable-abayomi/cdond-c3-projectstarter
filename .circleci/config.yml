@@ -392,8 +392,7 @@ jobs:
           name: Deploy backend
           command: |
             cd backend
-            npm cache clean
-            npm install
+            npm install --force
             npm run build
             cd ..
 
