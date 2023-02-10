@@ -296,8 +296,6 @@ jobs:
           name: Deploy frontend objects
           command: |
             cd frontend
-            sudo npm install -g npm@latest
-            rm -rf node_modules
             npm install
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
@@ -408,7 +406,53 @@ jobs:
       - destroy-environment
       - revert-migrations
 
+  smoke-test:
+    docker:
+      - image: cimg/base:stable 
+    steps:
+      - checkout
 
+      - install-nodejs
+      - install-awscli
+      - run:
+          name: Get backend url
+          command: |
+            # your code here
+      - run:
+          name: Get backend url
+          command: |
+            # your code here
+      - run:
+          name: Backend smoke test.
+          command: |
+            BACKEND_IP=$(aws ec2 describe-instances \
+            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            --filter "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+            --output text
+            )
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo ${BACKEND_IP}
+            echo backend-${CIRCLE_WORKFLOW_ID:0:7}
+            echo  ${API_URL}
+            if curl -s $API_URL/api/status | grep "ok"
+            then
+              exit 0
+            else
+              exit 1
+            fi
+      - run:
+          name: Frontend smoke test.
+          command: |
+            FRONTEND_WEBSITE=http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.${AWS_DEFAULT_REGION}.amazonaws.com
+            echo $FRONTEND_WEBSITE
+            if curl -s $FRONTEND_WEBSITE | grep "Welcome"
+            then
+              exit 0
+            else
+              exit 1
+            fi
+      - destroy-environment
+      - revert-migrations
 
 
   # smoke-test:
@@ -443,7 +487,9 @@ jobs:
   #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   #     - revert-migrations:
   #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-  #     # Here's where you will add some code to rollback on failure  
+  #     # Here's where you will add some code to rollback on failure
+
+  
 
   # cloudfront-update:
   #   docker:
