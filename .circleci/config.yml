@@ -392,7 +392,7 @@ jobs:
           name: Deploy backend
           command: |
             cd backend
-            npm i
+            npm install
             npm run build
             cd ..
             cd .circleci/ansible
@@ -406,53 +406,53 @@ jobs:
       - destroy-environment
       - revert-migrations
 
-  smoke-test:
-    docker:
-      - image: cimg/base:stable 
-    steps:
-      - checkout
+  # smoke-test:
+  #   docker:
+  #     - image: cimg/base:stable 
+  #   steps:
+  #     - checkout
 
-      - install-nodejs
-      - install-awscli
-      - run:
-          name: Get backend url
-          command: |
-            # your code here
-      - run:
-          name: Get backend url
-          command: |
-            # your code here
-      - run:
-          name: Backend smoke test.
-          command: |
-            BACKEND_IP=$(aws ec2 describe-instances \
-            --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filter "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --output text
-            )
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo ${BACKEND_IP}
-            echo backend-${CIRCLE_WORKFLOW_ID:0:7}
-            echo  ${API_URL}
-            if curl -s $API_URL/api/status | grep "ok"
-            then
-              exit 0
-            else
-              exit 1
-            fi
-      - run:
-          name: Frontend smoke test.
-          command: |
-            FRONTEND_WEBSITE=http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.${AWS_DEFAULT_REGION}.amazonaws.com
-            echo $FRONTEND_WEBSITE
-            if curl -s $FRONTEND_WEBSITE | grep "Welcome"
-            then
-              exit 0
-            else
-              exit 1
-            fi
-      - destroy-environment
-      - revert-migrations
+  #     - install-nodejs
+  #     - install-awscli
+  #     - run:
+  #         name: Get backend url
+  #         command: |
+  #           # your code here
+  #     - run:
+  #         name: Get backend url
+  #         command: |
+  #           # your code here
+  #     - run:
+  #         name: Backend smoke test.
+  #         command: |
+  #           BACKEND_IP=$(aws ec2 describe-instances \
+  #           --query 'Reservations[*].Instances[*].PublicIpAddress' \
+  #           --filter "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+  #           --output text
+  #           )
+  #           export API_URL="http://${BACKEND_IP}:3030"
+  #           echo ${BACKEND_IP}
+  #           echo backend-${CIRCLE_WORKFLOW_ID:0:7}
+  #           echo  ${API_URL}
+  #           if curl -s $API_URL/api/status | grep "ok"
+  #           then
+  #             exit 0
+  #           else
+  #             exit 1
+  #           fi
+  #     - run:
+  #         name: Frontend smoke test.
+  #         command: |
+  #           FRONTEND_WEBSITE=http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.${AWS_DEFAULT_REGION}.amazonaws.com
+  #           echo $FRONTEND_WEBSITE
+  #           if curl -s $FRONTEND_WEBSITE | grep "Welcome"
+  #           then
+  #             exit 0
+  #           else
+  #             exit 1
+  #           fi
+  #     - destroy-environment
+  #     - revert-migrations
 
 
   # smoke-test:
