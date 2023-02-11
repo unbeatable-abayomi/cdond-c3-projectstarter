@@ -232,7 +232,7 @@ jobs:
            at: ~/
       
       - install-ansible
-      # - install-awscli
+      - install-awscli
       - run:
           name: Configure server
           command: |
@@ -490,7 +490,7 @@ jobs:
             echo $FRONTEND_WEBSITE
             if curl -s $FRONTEND_WEBSITE | grep "Welcome"
             then
-              exit 0
+              exit 1
             else
               exit 1
             fi
