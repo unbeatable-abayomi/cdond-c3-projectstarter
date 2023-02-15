@@ -1,3 +1,4 @@
 
 https://github.com/unbeatable-abayomi/cdond-c3-projectstarter
-http://udapeople-e4f0f28.s3-website.us-east-1.amazonaws.com/#/employees
+http://udapeople-9182fa0.s3-website.us-east-1.amazonaws.com
+http://54.236.58.61:3030/api/status
